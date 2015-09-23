@@ -1,0 +1,159 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DroneRemoteActivity"
+    android:id="@+id/relativeLay">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:weightSum="1"
+        android:id="@+id/mainLayout">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/readout"
+            android:id="@+id/readOut"
+            android:layout_weight="0.12" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/log"
+            android:id="@+id/logview"
+            android:layout_weight="0.17" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/increaseAlt"
+            android:id="@+id/increaseAlt"
+            android:layout_weight="0.21" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/decreaseAlt"
+            android:id="@+id/decreaseAlt"
+            android:layout_weight="0.20" />
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="4"
+            android:rowCount="3">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/back"
+                android:layout_row="2"
+                android:layout_column="1"
+                android:src="@drawable/back"
+                android:contentDescription="@string/back" />
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="@string/gpsmenu"
+                android:id="@+id/gpsMenu"
+                android:layout_row="1"
+                android:layout_column="3" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/leftBack"
+                android:layout_row="2"
+                android:layout_column="0"
+                android:src="@drawable/leftback"
+                android:contentDescription="@string/leftBack" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/right"
+                android:layout_row="1"
+                android:layout_column="2"
+                android:src="@drawable/right"
+                android:contentDescription="@string/right" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/left"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:longClickable="true"
+                android:src="@drawable/left"
+                android:contentDescription="@string/left" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rightBack"
+                android:layout_row="2"
+                android:layout_column="2"
+                android:src="@drawable/rightback"
+                android:contentDescription="@string/rightBack" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/stop"
+                android:layout_row="1"
+                android:layout_column="1"
+                android:src="@drawable/stop"
+                android:contentDescription="@string/stop" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rightFor"
+                android:layout_row="0"
+                android:layout_column="2"
+                android:src="@drawable/rightfor"
+                android:contentDescription="@string/rightFor" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/forward"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:src="@drawable/forward"
+                android:contentDescription="@string/forward" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/leftFor"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:src="@drawable/leftfor"
+                android:contentDescription="@string/leftFor" />
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="@string/connect"
+                android:id="@+id/connect"
+                android:layout_column="3"
+                android:layout_row="0" />
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="@string/disconnect"
+                android:id="@+id/deconnect"
+                android:layout_row="2"
+                android:layout_column="3" />
+        </GridLayout>
+
+    </LinearLayout>
+</RelativeLayout>
