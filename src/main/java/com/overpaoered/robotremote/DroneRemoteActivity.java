@@ -181,5 +181,14 @@ public class DroneRemoteActivity extends Activity implements OnClickListener {
 			addToLog("stop");
 			bt.sendData("S");
 		}
+		else if(v == gpsMenu) {
+			addToLog("call GPS menu");
+            gpsMenu(v);
+		}
+	}
+
+	public void gpsMenu (View v) {
+		Intent intent = new Intent(this, LocationListActivity.class);
+		startActivity(intent);
 	}
 }
