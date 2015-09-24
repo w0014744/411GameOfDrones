@@ -63,11 +63,11 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
             bt.sendData("Library GPS location");
         }
 
-        if (v == loc1) {
+        if (v == loc3) {
             bt.sendData("Union GPS location");
         }
 
-        if (v == loc1) {
+        if (v == loc4) {
             bt.sendData("Stadium GPS location");
         }
     }
