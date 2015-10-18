@@ -155,31 +155,31 @@ public class DroneRemoteActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		if(v == connect) {
 			addToLog("Trying to connect");
-	//		bt.connect();
+			bt.connect();
 		} 
 		else if(v == deconnect) {
 			addToLog("closing connection");
-	//		bt.close();
+			bt.close();
 		}
 		else if(v == forwardArrow) {
 			addToLog("move forward");
-	//		bt.sendData("F");
+			bt.sendData("F");
 		}
 		else if(v == backArrow) {
 			addToLog("move back");
-	//		bt.sendData("B");
+			bt.sendData("B");
 		}
 		else if(v == rightArrow) {
 			addToLog("move right");
-	//		bt.sendData("R");
+			bt.sendData("R");
 		}
 		else if(v == leftArrow) {
 			addToLog("move left");
-	//		bt.sendData("L");
+			bt.sendData("L");
 		}
 		else if(v == stop) {
 			addToLog("stop");
-	//		bt.sendData("S");
+			bt.sendData("S");
 		}
 		else if(v == gpsMenu) {
 			addToLog("call GPS menu");
@@ -187,11 +187,11 @@ public class DroneRemoteActivity extends Activity implements OnClickListener {
 		}
         else if(v == incAlt) {
             addToLog("increase altitude");
-    //      bt.sendData("U");
+            bt.sendData("U");
         }
         else if(v == decAlt) {
             addToLog("decrease altitude");
-    //      bt.sendData("D");
+            bt.sendData("D");
         }
         else if (v == rightFor) {
             addToLog("right forward");
