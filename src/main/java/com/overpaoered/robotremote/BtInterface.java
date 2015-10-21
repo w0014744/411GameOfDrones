@@ -46,7 +46,7 @@ public class BtInterface {
 	
 		boolean foundDevice = false;
 		for(int i=0;i<pairedDevices.length;i++) {
-			if(pairedDevices[i].getName().contains("HC-06")) {
+			if(pairedDevices[i].getName().contains("JY-MCU")) {
 				device = pairedDevices[i];
 				try {
 					socket = device.createRfcommSocketToServiceRecord(UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"));
