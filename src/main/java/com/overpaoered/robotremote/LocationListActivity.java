@@ -146,37 +146,42 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
 
     @Override
     public void onClick (View v) {
-        if (v == loc1) {
-            float bearing = current.bearingTo(fayard);
-            float distance = current.distanceTo(fayard);
-            readOut.setText(bearing + " , " + distance);
-            String data = bearing + "," + distance;
-            bt.sendData(data);
+        try {
+            if (v == loc1) {
+                float bearing = current.bearingTo(fayard);
+                float distance = current.distanceTo(fayard);
+                readOut.setText(bearing + " , " + distance);
+                String data = bearing + "," + distance;
+                bt.sendData(data);
 
-        }
+            }
 
-        if (v == loc2) {
-            float bearing = current.bearingTo(library);
-            float distance = current.distanceTo(library);
-            readOut.setText(bearing + " , " + distance);
-            String data = bearing + "," + distance;
-            bt.sendData(data);
-        }
+            if (v == loc2) {
+                float bearing = current.bearingTo(library);
+                float distance = current.distanceTo(library);
+                readOut.setText(bearing + " , " + distance);
+                String data = bearing + "," + distance;
+                bt.sendData(data);
+            }
 
-        if (v == loc3) {
-            float bearing = current.bearingTo(union);
-            float distance = current.distanceTo(union);
-            readOut.setText(bearing + " , " + distance);
-            String data = bearing + "," + distance;
-            bt.sendData(data);
-        }
+            if (v == loc3) {
+                float bearing = current.bearingTo(union);
+                float distance = current.distanceTo(union);
+                readOut.setText(bearing + " , " + distance);
+                String data = bearing + "," + distance;
+                bt.sendData(data);
+            }
 
-        if (v == loc4) {
-            float bearing = current.bearingTo(stadium);
-            float distance = current.distanceTo(stadium);
-            readOut.setText(bearing + ", " + distance);
-            String data = bearing + "," + distance;
-            bt.sendData(data);
+            if (v == loc4) {
+                float bearing = current.bearingTo(stadium);
+                float distance = current.distanceTo(stadium);
+                readOut.setText(bearing + ", " + distance);
+                String data = bearing + "," + distance;
+                bt.sendData(data);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            readOut.setText("Current Location Unavailable");
         }
     }
     /*
@@ -190,7 +195,6 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
             public void onLocationChanged(Location location) {
                 // Called when a new location is found by the network location provider.
                 //This is where we get the location
-                readOut.setText(location.getLongitude() + "  ,  " + location.getLatitude());
                 current = location;
             }
 
