@@ -16,6 +16,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+/*
+This class is used for sending and recieving data between the Arduino device and Android device.
+ */
 public class BtInterface {
 
 	private BluetoothDevice device = null;
@@ -33,12 +36,23 @@ public class BtInterface {
 	public static int DISCONNECTED = 2;
 	static final String TAG = "Device";	
 
+	/*
+		The Contructor takes in two handlers to handle the status and messages of the BlueTooth adapter.
+		@param hstatus The Handler which handles the status of the Bluetooth adapter.
+		@param h The Handler to handle the message sent from the Bluetooth adapter
+		@see BluetoothAdapter
+	 */
 	public BtInterface(Handler hstatus, Handler h) {
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		handlerStatus = hstatus;
 		handlerMessage = h;		
 	}
 
+
+	/*
+	This method sets up the connection between the Bluetooth device on the Drone and the Android device.
+	The specific name of the Bluetooth device is JY-MCU
+	 */
 	public void connect() {
 		
 		Set<BluetoothDevice> setpairedDevices = mBluetoothAdapter.getBondedDevices();
@@ -86,6 +100,9 @@ public class BtInterface {
 		}.start();
 	}
 
+	/*
+	Closes the Bluetooth connection and sends a DISCONNECTED signal to the Status Handler
+	 */
 	public void close() {
 		try {
 			socket.close();
@@ -101,6 +118,10 @@ public class BtInterface {
 		}
 	}
 
+	/*
+	This method sends data from the Android device to the Adruino through a serial connection.
+	@param data The data to be sent to the Arduino
+	 */
 		public void sendData(String data) {
 			try {
 				sendStream.write(data.getBytes());
@@ -109,7 +130,9 @@ public class BtInterface {
 				e.printStackTrace();
 			}
 		}
-
+/*
+This class establishes connection between the Android and Arduino
+ */
 	private class ReceiverThread extends Thread {
 		Handler handler;
 		
