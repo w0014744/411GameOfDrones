@@ -1,13 +1,17 @@
 package com.overpaoered.robotremote;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.*;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -46,23 +50,28 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
     final Handler handlerStatus = new Handler() {
         public void handleMessage(Message msg) {
             int status = msg.arg1;
-            if(status == BtInterface.CONNECTED) {
+            if (status == BtInterface.CONNECTED) {
                 addToLog("Connected");
-            } else if(status == BtInterface.DISCONNECTED) {
+            } else if (status == BtInterface.DISCONNECTED) {
                 addToLog("Disconnected");
             }
         }
     };
 
-    private void addToLog(String message){
-        for (int i = 1; i < logArray.length; i++){
-            logArray[i-1] = logArray[i];
+    /*
+    ** addToLog - this method adds a string to the on-screen log that indicates which button has been pushed
+    ** @param message - the message to be written to the log
+    **
+     */
+    private void addToLog(String message) {
+        for (int i = 1; i < logArray.length; i++) {
+            logArray[i - 1] = logArray[i];
         }
         logArray[logArray.length - 1] = message;
 
         readOut.setText("");
-        for (int i = 0; i < logArray.length; i++){
-            if (logArray[i] != null){
+        for (int i = 0; i < logArray.length; i++) {
+            if (logArray[i] != null) {
                 readOut.append(logArray[i] + "\n");
             }
         }
@@ -77,24 +86,25 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         bt = new BtInterface(handlerStatus, handler);
         setLocations();
 
-        loc1 = (Button)findViewById(R.id.location1Btn);
+        loc1 = (Button) findViewById(R.id.location1Btn);
         loc1.setOnClickListener(this);
 
-        loc2 = (Button)findViewById(R.id.location2Btn);
+        loc2 = (Button) findViewById(R.id.location2Btn);
         loc2.setOnClickListener(this);
 
-        loc3 = (Button)findViewById(R.id.location3Btn);
+        loc3 = (Button) findViewById(R.id.location3Btn);
         loc3.setOnClickListener(this);
 
-        loc4 = (Button)findViewById(R.id.location4Btn);
+        loc4 = (Button) findViewById(R.id.location4Btn);
         loc4.setOnClickListener(this);
 
-        readOut = (TextView)findViewById(R.id.readOut);
+        readOut = (TextView) findViewById(R.id.readOut);
 
-        locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         String provider = locManager.GPS_PROVIDER;
         current = new Location(provider);
-        getLocation();
+        double currentLongitude = current.getLongitude();
+        double currentLatitude = current.getLatitude();
     }
 
     @Override
@@ -142,7 +152,7 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         if (v == loc1) {
             float bearing = current.bearingTo(fayard);
             float distance = current.distanceTo(fayard);
-            readOut.setText(fayard.getLatitude() + " , " + fayard.getLongitude());
+            readOut.setText(bearing + " , " + distance);
             String data = bearing + "," + distance;
             bt.sendData(data);
 
@@ -151,7 +161,7 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         if (v == loc2) {
             float bearing = current.bearingTo(library);
             float distance = current.distanceTo(library);
-            readOut.setText(library.getLatitude() + " , " + library.getLongitude());
+            readOut.setText(bearing + " , " + distance);
             String data = bearing + "," + distance;
             bt.sendData(data);
         }
@@ -167,7 +177,7 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         if (v == loc4) {
             float bearing = current.bearingTo(stadium);
             float distance = current.distanceTo(stadium);
-            readOut.setText(current.getLatitude() + ", " + current.getLongitude());
+            readOut.setText(bearing + ", " + distance);
             String data = bearing + "," + distance;
             bt.sendData(data);
         }
@@ -183,6 +193,7 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
                 // Called when a new location is found by the network location provider.
                 //This is where we get the location
                 readOut.setText(location.getLongitude() + "  ,  " + location.getLatitude());
+                current = location;
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {}
