@@ -14,6 +14,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/*
+The main Activity for the App. It displays the main options and controls for the drone.
+ */
 public class DroneRemoteActivity extends Activity implements OnClickListener {
 	private TextView logview, readout;
 	private Button connect, deconnect, gpsMenu, incAlt, decAlt;
@@ -45,6 +48,10 @@ public class DroneRemoteActivity extends Activity implements OnClickListener {
         }
     };
 
+    /*
+        A method to add a string message to the end of the log.
+        @param message The message to append to the end of the log.
+     */
     private void addToLog(String message){
     	for (int i = 1; i < logArray.length; i++){
         	logArray[i-1] = logArray[i];
@@ -120,7 +127,9 @@ public class DroneRemoteActivity extends Activity implements OnClickListener {
 
 
     }
-
+    /*
+    Initializes the bluetooth connection.
+    */
     @Override
     public void onResume() {
         super.onResume();
@@ -210,6 +219,10 @@ public class DroneRemoteActivity extends Activity implements OnClickListener {
         }
 	}
 
+    /*
+    Starts the GPS menu activity.
+    @param v WHAT? Never used in the method.
+     */
 	public void gpsMenu (View v) {
 		Intent intent = new Intent(this, LocationListActivity.class);
 		startActivity(intent);
