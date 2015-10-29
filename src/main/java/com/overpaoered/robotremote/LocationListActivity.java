@@ -7,7 +7,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.*;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -33,6 +33,8 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
     static final String TAG = "Device";
     static final int REQUEST_ENABLE_BT = 3;
     private String[] logArray = null;
+
+    LocationManager locManager;
 
     final Handler handler = new Handler() {
         public void handleMessage(Message msg) {
@@ -89,11 +91,10 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
 
         readOut = (TextView)findViewById(R.id.readOut);
 
-        LocationManager locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         String provider = locManager.GPS_PROVIDER;
         current = new Location(provider);
-        double currentLongitude = current.getLongitude();
-        double currentLatitude = current.getLatitude();
+        getLocation();
     }
 
     @Override
@@ -144,6 +145,7 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
             readOut.setText(fayard.getLatitude() + " , " + fayard.getLongitude());
             String data = bearing + "," + distance;
             bt.sendData(data);
+
         }
 
         if (v == loc2) {
@@ -170,7 +172,36 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
             bt.sendData(data);
         }
     }
+    /*
+    yaysssssss
+     */
+    public Location getLocation() {
+        Location here = null;
 
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                // Called when a new location is found by the network location provider.
+                //This is where we get the location
+                readOut.setText(location.getLongitude() + "  ,  " + location.getLatitude());
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+            public void onProviderEnabled(String provider) {}
+
+            public void onProviderDisabled(String provider) {}
+        };
+
+        try {
+            locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        }catch (SecurityException e){
+            e.printStackTrace();
+        }
+        return here;
+
+    }
+
+    //GPS Locations of Important Buildings.
     public void setLocations ()
     {
         library.setLatitude(30.514708);
