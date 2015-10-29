@@ -100,9 +100,8 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
 
         readOut = (TextView) findViewById(R.id.readOut);
         
+        locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         getLocation();
-        double currentLongitude = current.getLongitude();
-        double currentLatitude = current.getLatitude();
     }
 
     @Override
@@ -195,16 +194,19 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
                 current = location;
             }
 
-            public void onStatusChanged(String provider, int status, Bundle extras) {}
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
 
-            public void onProviderEnabled(String provider) {}
+            public void onProviderEnabled(String provider) {
+            }
 
-            public void onProviderDisabled(String provider) {}
+            public void onProviderDisabled(String provider) {
+            }
         };
 
         try {
             locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-        }catch (SecurityException e){
+        } catch (SecurityException e) {
             e.printStackTrace();
         }
     }
