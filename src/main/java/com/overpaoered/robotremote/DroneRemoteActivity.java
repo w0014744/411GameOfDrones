@@ -66,6 +66,7 @@ public class DroneRemoteActivity extends Activity implements OnClickListener {
         setContentView(R.layout.activity_ui);
         setRequestedOrientation(ActivityInfo
                 .SCREEN_ORIENTATION_PORTRAIT);
+        bt = new BtInterface(handlerStatus, handler);
 
         logview = (TextView)findViewById(R.id.logview);
 

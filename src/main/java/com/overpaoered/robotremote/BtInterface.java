@@ -1,7 +1,7 @@
 package com.overpaoered.robotremote;
 
 import java.io.BufferedReader;
-import java.io.IOException;
+import java.lang.Exception;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -42,7 +42,7 @@ public class BtInterface {
 	public void connect() {
 		
 		Set<BluetoothDevice> setpairedDevices = mBluetoothAdapter.getBondedDevices();
-    	BluetoothDevice[] pairedDevices = (BluetoothDevice[]) setpairedDevices.toArray(new BluetoothDevice[setpairedDevices.size()]);
+    	BluetoothDevice[] pairedDevices = setpairedDevices.toArray(new BluetoothDevice[setpairedDevices.size()]);
 	
 		boolean foundDevice = false;
 		for(int i=0;i<pairedDevices.length;i++) {
@@ -54,7 +54,7 @@ public class BtInterface {
 					receiveReader = new BufferedReader(new InputStreamReader(receiveStream));
 					sendStream = socket.getOutputStream();
 				} 
-				catch (IOException e) {
+				catch (Exception e) {
 					e.printStackTrace();
 				}
 				foundDevice = true;
@@ -78,7 +78,7 @@ public class BtInterface {
 					receiverThread.start();
 					
 				} 
-				catch (IOException e) {
+				catch (Exception e) {
 					Log.v("N", "Connection Failed : "+e.getMessage());
 					e.printStackTrace();
 				}
@@ -96,7 +96,7 @@ public class BtInterface {
 			handlerStatus.sendMessage(msg);
             
 		} 
-		catch (IOException e) {
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -105,7 +105,7 @@ public class BtInterface {
 			try {
 				sendStream.write(data.getBytes());
 		        sendStream.flush();
-			} catch (IOException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -144,7 +144,7 @@ public class BtInterface {
 						
 					}
 				} 
-				catch (IOException e) {
+				catch (Exception e) {
 					e.printStackTrace();
 				}
 			}

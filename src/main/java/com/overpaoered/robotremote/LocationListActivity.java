@@ -1,11 +1,15 @@
 package com.overpaoered.robotremote;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.location.Criteria;
 import android.location.Location;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +29,42 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
     private Location union = new Location("");
     private Location current = null;
     private TextView readOut;
+    private BluetoothAdapter mBluetoothAdapter = null;
+    static final String TAG = "Device";
+    static final int REQUEST_ENABLE_BT = 3;
+    private String[] logArray = null;
+
+    final Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            String data = msg.getData().getString("receivedData");
+            addToLog(data);
+        }
+    };
+
+    final Handler handlerStatus = new Handler() {
+        public void handleMessage(Message msg) {
+            int status = msg.arg1;
+            if(status == BtInterface.CONNECTED) {
+                addToLog("Connected");
+            } else if(status == BtInterface.DISCONNECTED) {
+                addToLog("Disconnected");
+            }
+        }
+    };
+
+    private void addToLog(String message){
+        for (int i = 1; i < logArray.length; i++){
+            logArray[i-1] = logArray[i];
+        }
+        logArray[logArray.length - 1] = message;
+
+        readOut.setText("");
+        for (int i = 0; i < logArray.length; i++){
+            if (logArray[i] != null){
+                readOut.append(logArray[i] + "\n");
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +72,7 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         setContentView(R.layout.activity_location_list);
         setRequestedOrientation(ActivityInfo
                 .SCREEN_ORIENTATION_PORTRAIT);
+        bt = new BtInterface(handlerStatus, handler);
         setLocations();
 
         loc1 = (Button)findViewById(R.id.location1Btn);
@@ -53,6 +94,24 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         current = new Location(provider);
         double currentLongitude = current.getLongitude();
         double currentLatitude = current.getLatitude();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (mBluetoothAdapter == null) {
+            Log.v(TAG, "Device does not support Bluetooth");
+        }
+        else{
+            if (!mBluetoothAdapter.isEnabled()){
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+            }
+            else{
+                bt = new BtInterface(handlerStatus, handler);
+            }
+        }
     }
 
     @Override
@@ -82,7 +141,7 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         if (v == loc1) {
             float bearing = current.bearingTo(fayard);
             float distance = current.distanceTo(fayard);
-            readOut.setText(bearing + " , " + distance);
+            readOut.setText(fayard.getLatitude() + " , " + fayard.getLongitude());
             String data = bearing + "," + distance;
             bt.sendData(data);
         }
@@ -90,17 +149,25 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         if (v == loc2) {
             float bearing = current.bearingTo(library);
             float distance = current.distanceTo(library);
-            readOut.setText(bearing + " , " + distance);
+            readOut.setText(library.getLatitude() + " , " + library.getLongitude());
             String data = bearing + "," + distance;
             bt.sendData(data);
         }
 
         if (v == loc3) {
-            bt.sendData("Union GPS location");
+            float bearing = current.bearingTo(union);
+            float distance = current.distanceTo(union);
+            readOut.setText(bearing + " , " + distance);
+            String data = bearing + "," + distance;
+            bt.sendData(data);
         }
 
         if (v == loc4) {
-            bt.sendData("Stadium GPS location");
+            float bearing = current.bearingTo(stadium);
+            float distance = current.distanceTo(stadium);
+            readOut.setText(current.getLatitude() + ", " + current.getLongitude());
+            String data = bearing + "," + distance;
+            bt.sendData(data);
         }
     }
 
