@@ -101,8 +101,7 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         readOut = (TextView) findViewById(R.id.readOut);
 
         LocationManager locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        String provider = locManager.GPS_PROVIDER;
-        current = new Location(provider);
+        getLocation();
         double currentLongitude = current.getLongitude();
         double currentLatitude = current.getLatitude();
     }
@@ -183,10 +182,11 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         }
     }
     /*
-    yaysssssss
+    ** getLocation - this method gets the users current location based on the phone GPS
+    ** and places that location in the current Location object
+    **
      */
-    public Location getLocation() {
-        Location here = null;
+    public void getLocation() {
 
         LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
@@ -208,8 +208,6 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         }catch (SecurityException e){
             e.printStackTrace();
         }
-        return here;
-
     }
 
     //GPS Locations of Important Buildings.
