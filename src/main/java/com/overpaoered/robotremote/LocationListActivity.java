@@ -99,8 +99,7 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         loc4.setOnClickListener(this);
 
         readOut = (TextView) findViewById(R.id.readOut);
-
-        LocationManager locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        
         getLocation();
         double currentLongitude = current.getLongitude();
         double currentLatitude = current.getLatitude();
