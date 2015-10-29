@@ -11,6 +11,7 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -99,8 +100,19 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         loc4.setOnClickListener(this);
 
         readOut = (TextView) findViewById(R.id.readOut);
-        
-        locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+
+        locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ContextCompat.checkSelfPermission(getApplicationContext() ,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for Activity#requestPermissions for more details.
+            return;
+        }
+        current = locManager.getLastKnownLocation(locManager.GPS_PROVIDER);
         getLocation();
     }
 
@@ -147,6 +159,7 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
     @Override
     public void onClick (View v) {
         if (v == loc1) {
+            getLocation();
             float bearing = current.bearingTo(fayard);
             float distance = current.distanceTo(fayard);
             readOut.setText(bearing + " , " + distance);
@@ -156,6 +169,7 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         }
 
         if (v == loc2) {
+            getLocation();
             float bearing = current.bearingTo(library);
             float distance = current.distanceTo(library);
             readOut.setText(bearing + " , " + distance);
@@ -164,6 +178,7 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         }
 
         if (v == loc3) {
+            getLocation();
             float bearing = current.bearingTo(union);
             float distance = current.distanceTo(union);
             readOut.setText(bearing + " , " + distance);
@@ -172,6 +187,7 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         }
 
         if (v == loc4) {
+            getLocation();
             float bearing = current.bearingTo(stadium);
             float distance = current.distanceTo(stadium);
             readOut.setText(bearing + ", " + distance);
