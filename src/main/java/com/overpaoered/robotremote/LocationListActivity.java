@@ -24,8 +24,16 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.bluetooth.BluetoothAdapter;
 import android.widget.TextView;
+import android.support.v4.app.FragmentActivity;
+import android.os.Bundle;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-public class LocationListActivity extends AppCompatActivity implements OnClickListener {
+public class LocationListActivity extends AppCompatActivity implements OnClickListener, OnMapReadyCallback {
     private Button loc1, loc2, loc3, loc4;
     private BtInterface bt = null;
     private Location library = new Location("");
@@ -40,6 +48,9 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
     private String[] logArray = null;
 
     LocationManager locManager;
+
+    //Google Map
+    private GoogleMap mMap;
 
     final Handler handler = new Handler() {
         public void handleMessage(Message msg) {
@@ -116,6 +127,11 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         }
         current = locManager.getLastKnownLocation(locManager.GPS_PROVIDER);
         getLocation();
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);//Map ID
+        mapFragment.getMapAsync(this);
     }
 
     @Override
@@ -161,17 +177,15 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
     @Override
     public void onClick (View v) {
         if (v == loc1) {
-            getLocation();
+
             float bearing = current.bearingTo(fayard);
             float distance = current.distanceTo(fayard);
             readOut.setText(bearing + " , " + distance);
             String data = bearing + "," + distance;
             bt.sendData(data);
-
         }
 
         if (v == loc2) {
-            getLocation();
             float bearing = current.bearingTo(library);
             float distance = current.distanceTo(library);
             readOut.setText(bearing + " , " + distance);
@@ -180,7 +194,6 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         }
 
         if (v == loc3) {
-            getLocation();
             float bearing = current.bearingTo(union);
             float distance = current.distanceTo(union);
             readOut.setText(bearing + " , " + distance);
@@ -240,5 +253,28 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         fayard.setLongitude(-90.46628);
         union.setLatitude(30.514148);
         union.setLongitude(-90.467122);
+    }
+
+
+    /**
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * This is where we can add markers or lines, add listeners or move the camera.
+     * If Google Play services is not installed on the device, the user will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * installed Google Play services and returned to the app.
+     */
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        // Add a marker in Sydney and move the camera
+        mMap.addMarker(new MarkerOptions().position(new LatLng(fayard.getLatitude(), fayard.getLongitude())).title("Fayard Hall"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(library.getLatitude(), library.getLongitude())).title("Library"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(union.getLatitude(), union.getLongitude())).title("Union"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(stadium.getLatitude(), stadium.getLongitude())).title("Stadium"));
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(current.getLatitude(), current.getLongitude())));
+
     }
 }
