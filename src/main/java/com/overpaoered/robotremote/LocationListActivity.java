@@ -224,6 +224,7 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
                 readOut.setText(location.getLongitude() + "  ,  " + location.getLatitude());
                 current = location;
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(current.getLatitude(), current.getLongitude())));
+
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
