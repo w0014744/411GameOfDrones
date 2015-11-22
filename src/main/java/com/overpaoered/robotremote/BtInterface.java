@@ -17,7 +17,7 @@ import android.os.Message;
 import android.util.Log;
 
 /*
-This class is used for sending and recieving data between the Arduino device and Android device.
+This class is used for sending and receiving data between the Arduino device and Android device.
  */
 public class BtInterface {
 
@@ -60,7 +60,7 @@ public class BtInterface {
 	
 		boolean foundDevice = false;
 		for(int i=0;i<pairedDevices.length;i++) {
-			if(pairedDevices[i].getName().contains("JY-MCU")) {
+			if(pairedDevices[i].getName().contains("HC-06")) {
 				device = pairedDevices[i];
 				try {
 					socket = device.createRfcommSocketToServiceRecord(UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"));
