@@ -25,7 +25,7 @@ public class DroneRemoteActivity extends Activity implements OnClickListener {
 	
 	private String[] logArray = null;
 
-	private BtInterface bt = null;
+	public static BtInterface bt = null;
 	
 	static final String TAG = "Device";
 	static final int REQUEST_ENABLE_BT = 3;

@@ -95,7 +95,7 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         setContentView(R.layout.activity_location_list);
         setRequestedOrientation(ActivityInfo
                 .SCREEN_ORIENTATION_PORTRAIT);
-        bt = new BtInterface(handlerStatus, handler);
+        bt = DroneRemoteActivity.bt;
         setLocations();
 
         loc1 = (Button) findViewById(R.id.location1Btn);
@@ -147,7 +147,7 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
             }
             else{
-                bt = new BtInterface(handlerStatus, handler);
+                bt = DroneRemoteActivity.bt;
             }
         }
     }
