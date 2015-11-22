@@ -56,6 +56,7 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         public void handleMessage(Message msg) {
             String data = msg.getData().getString("receivedData");
             addToLog(data);
+
         }
     };
 
