@@ -223,6 +223,7 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
                 //This is where we get the location
                 readOut.setText(location.getLongitude() + "  ,  " + location.getLatitude());
                 current = location;
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(current.getLatitude(), current.getLongitude())));
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -273,8 +274,8 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         mMap.addMarker(new MarkerOptions().position(new LatLng(library.getLatitude(), library.getLongitude())).title("Library"));
         mMap.addMarker(new MarkerOptions().position(new LatLng(union.getLatitude(), union.getLongitude())).title("Union"));
         mMap.addMarker(new MarkerOptions().position(new LatLng(stadium.getLatitude(), stadium.getLongitude())).title("Stadium"));
-
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(current.getLatitude(), current.getLongitude())));
+        mMap.animateCamera(CameraUpdateFactory.zoomBy(12.0f));
         mMap.addMarker(new MarkerOptions().position(new LatLng(current.getLatitude(), current.getLongitude())).title("Current Location"));
 
     }
