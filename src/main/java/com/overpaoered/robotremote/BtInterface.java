@@ -17,7 +17,7 @@ import android.os.Message;
 import android.util.Log;
 
 /*
-This class is used for sending and recieving data between the Arduino device and Android device.
+This class is used for sending and receiving data between the Arduino device and Android device.
  */
 public class BtInterface {
 
