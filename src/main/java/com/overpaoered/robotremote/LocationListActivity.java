@@ -275,6 +275,7 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         mMap.addMarker(new MarkerOptions().position(new LatLng(stadium.getLatitude(), stadium.getLongitude())).title("Stadium"));
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(current.getLatitude(), current.getLongitude())));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(current.getLatitude(), current.getLongitude())).title("Current Location"));
 
     }
 }
