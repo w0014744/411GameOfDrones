@@ -36,11 +36,20 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class LocationListActivity extends AppCompatActivity implements OnClickListener, OnMapReadyCallback {
     private Button loc1, loc2, loc3, loc4;
     private BtInterface bt = null;
+
+    //Locations
     private Location library = new Location("");
-    private Location stadium = new Location("");
     private Location fayard = new Location("");
-    private Location union = new Location("");
+    private Location unionEast = new Location("");
+    private Location unionWest = new Location("");
+    private Location fountain = new Location("");
+    private Location location6 = new Location("");
+    private Location location7 = new Location("");
+    private Location anzalone= new Location("");
+    private Location dvic = new Location("");
+
     private Location current = null;
+
     private TextView readOut;
     private BluetoothAdapter mBluetoothAdapter = null;
     static final String TAG = "Device";
@@ -182,34 +191,23 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
             float bearing = current.bearingTo(fayard);
             float distance = current.distanceTo(fayard);
             readOut.setText(bearing + " , " + distance);
-            String data = bearing + "," + distance;
-            bt.sendData(data);
+
+            bt.sendData(((String.valueOf(bearing))));
+            bt.sendData(",");
+            bt.sendData(((String.valueOf(distance))));
         }
 
         if (v == loc2) {
             float bearing = current.bearingTo(library);
             float distance = current.distanceTo(library);
             readOut.setText(bearing + " , " + distance);
-            String data = bearing + "," + distance;
-            bt.sendData(data);
+            bt.sendData(((String.valueOf(bearing))));
+            bt.sendData(",");
+            bt.sendData(((String.valueOf(distance))));
         }
 
-        if (v == loc3) {
-            float bearing = current.bearingTo(union);
-            float distance = current.distanceTo(union);
-            readOut.setText(bearing + " , " + distance);
-            String data = bearing + "," + distance;
-            bt.sendData(data);
-        }
 
-        if (v == loc4) {
-            getLocation();
-            float bearing = current.bearingTo(stadium);
-            float distance = current.distanceTo(stadium);
-            readOut.setText(bearing + ", " + distance);
-            String data = bearing + "," + distance;
-            bt.sendData(data);
-        }
+
     }
     /*
     ** getLocation - this method gets the users current location based on the phone GPS
@@ -225,6 +223,7 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
                 readOut.setText(location.getLongitude() + "  ,  " + location.getLatitude());
                 current = location;
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(current.getLatitude(), current.getLongitude())));
+                mMap.addMarker(new MarkerOptions().position(new LatLng(current.getLatitude(), current.getLongitude())).title("Current Location"));
 
             }
 
@@ -239,7 +238,7 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         };
 
         try {
-            locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+            locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 3, locationListener);
         } catch (SecurityException e) {
             e.printStackTrace();
         }
@@ -248,14 +247,32 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
     //GPS Locations of Important Buildings.
     public void setLocations ()
     {
-        library.setLatitude(30.514708);
-        library.setLongitude(-90.468334);
-        stadium.setLatitude(30.511353);
-        stadium.setLongitude(-90.469176);
+        library.setLatitude(30.514699);
+        library.setLongitude(-90.468361);
+
         fayard.setLatitude(30.514883);
         fayard.setLongitude(-90.46628);
-        union.setLatitude(30.514148);
-        union.setLongitude(-90.467122);
+
+        fountain.setLatitude(30.514711);
+        fountain.setLongitude(-90.467089);
+
+        unionEast.setLatitude(30.514431);
+        unionEast.setLongitude(-90.467011);
+
+        unionWest.setLatitude(30.514240);
+        unionWest.setLongitude(-90.468123);
+
+        dvic.setLatitude(30.514736);
+        dvic.setLongitude(-90.468174);
+
+        location6.setLatitude(30.515035);
+        location6.setLongitude(-90.467182);
+
+        location7.setLatitude(30.515140);
+        location7.setLongitude(-90.467215);
+
+        anzalone.setLatitude(30.515217);
+        anzalone.setLongitude(-90.466925);
     }
 
 
@@ -274,11 +291,13 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         // Add a marker in Sydney and move the camera
         mMap.addMarker(new MarkerOptions().position(new LatLng(fayard.getLatitude(), fayard.getLongitude())).title("Fayard Hall"));
         mMap.addMarker(new MarkerOptions().position(new LatLng(library.getLatitude(), library.getLongitude())).title("Library"));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(union.getLatitude(), union.getLongitude())).title("Union"));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(stadium.getLatitude(), stadium.getLongitude())).title("Stadium"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(current.getLatitude(), current.getLongitude())));
-        mMap.animateCamera(CameraUpdateFactory.zoomBy(12.0f));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(current.getLatitude(), current.getLongitude())).title("Current Location"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(fountain.getLatitude(), fountain.getLongitude())).title("Katrina Fountain"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(unionEast.getLatitude(), unionEast.getLongitude())).title("Union East"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(unionWest.getLatitude(), unionWest.getLongitude())).title("Union West"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(dvic.getLatitude(), dvic.getLongitude())).title("Dvic"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(anzalone.getLatitude(), anzalone.getLongitude())).title("Library"));
+
+        mMap.animateCamera(CameraUpdateFactory.zoomBy(14.0f));
 
     }
 }
