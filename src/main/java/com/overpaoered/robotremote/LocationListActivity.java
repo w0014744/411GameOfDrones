@@ -30,7 +30,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class LocationListActivity extends AppCompatActivity implements OnClickListener, OnMapReadyCallback {
@@ -49,6 +51,7 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
     private Location dvic = new Location("");
 
     private Location current = null;
+    private Marker currentMarker = null;
 
     private TextView readOut;
     private BluetoothAdapter mBluetoothAdapter = null;
@@ -221,10 +224,12 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
                 // Called when a new location is found by the network location provider.
                 //This is where we get the location
                 readOut.setText(location.getLongitude() + "  ,  " + location.getLatitude());
-                current = location;
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(current.getLatitude(), current.getLongitude())));
-                mMap.addMarker(new MarkerOptions().position(new LatLng(current.getLatitude(), current.getLongitude())).title("Current Location"));
 
+                current = location;
+
+                if(currentMarker != null)currentMarker.remove();
+                currentMarker = mMap.addMarker(new MarkerOptions().position(new LatLng(current.getLatitude(), current.getLongitude())).title("Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.kyang)));
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(current.getLatitude(), current.getLongitude())));
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -238,7 +243,7 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         };
 
         try {
-            locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 3, locationListener);
+            locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
         } catch (SecurityException e) {
             e.printStackTrace();
         }
@@ -295,7 +300,7 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         mMap.addMarker(new MarkerOptions().position(new LatLng(unionEast.getLatitude(), unionEast.getLongitude())).title("Union East"));
         mMap.addMarker(new MarkerOptions().position(new LatLng(unionWest.getLatitude(), unionWest.getLongitude())).title("Union West"));
         mMap.addMarker(new MarkerOptions().position(new LatLng(dvic.getLatitude(), dvic.getLongitude())).title("Dvic"));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(anzalone.getLatitude(), anzalone.getLongitude())).title("Library"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(anzalone.getLatitude(), anzalone.getLongitude())).title("Anzalone"));
 
         mMap.animateCamera(CameraUpdateFactory.zoomBy(14.0f));
 
