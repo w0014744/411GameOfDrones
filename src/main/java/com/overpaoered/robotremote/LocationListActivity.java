@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.os.Build;
@@ -18,11 +19,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.bluetooth.BluetoothAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -31,12 +35,14 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class LocationListActivity extends AppCompatActivity implements OnClickListener, OnMapReadyCallback {
-    private Button loc1, loc2, loc3, loc4;
+public class LocationListActivity extends AppCompatActivity implements OnMapReadyCallback,AdapterView.OnItemSelectedListener {
+    private Spinner spinner;
     private BtInterface bt = null;
 
     //Locations
@@ -52,6 +58,7 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
 
     private Location current = null;
     private Marker currentMarker = null;
+    private Circle des;
 
     private TextView readOut;
     private BluetoothAdapter mBluetoothAdapter = null;
@@ -111,17 +118,13 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         bt = DroneRemoteActivity.bt;
         setLocations();
 
-        loc1 = (Button) findViewById(R.id.location1Btn);
-        loc1.setOnClickListener(this);
-
-        loc2 = (Button) findViewById(R.id.location2Btn);
-        loc2.setOnClickListener(this);
-
-        loc3 = (Button) findViewById(R.id.location3Btn);
-        loc3.setOnClickListener(this);
-
-        loc4 = (Button) findViewById(R.id.location4Btn);
-        loc4.setOnClickListener(this);
+        spinner = (Spinner) findViewById(R.id.locationSelecter);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this , R.array.Locations, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
 
         readOut = (TextView) findViewById(R.id.readOut);
 
@@ -186,10 +189,11 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
 
         return super.onOptionsItemSelected(item);
     }
-
+/*
     @Override
     public void onClick (View v) {
-        if (v == loc1) {
+        if (v == spinner) {
+
 
             float bearing = current.bearingTo(fayard);
             float distance = current.distanceTo(fayard);
@@ -200,18 +204,11 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
             bt.sendData(((String.valueOf(distance))));
         }
 
-        if (v == loc2) {
-            float bearing = current.bearingTo(library);
-            float distance = current.distanceTo(library);
-            readOut.setText(bearing + " , " + distance);
-            bt.sendData(((String.valueOf(bearing))));
-            bt.sendData(",");
-            bt.sendData(((String.valueOf(distance))));
-        }
-
-
 
     }
+    */
+
+
     /*
     ** getLocation - this method gets the users current location based on the phone GPS
     ** and places that location in the current Location object
@@ -223,7 +220,6 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
             public void onLocationChanged(Location location) {
                 // Called when a new location is found by the network location provider.
                 //This is where we get the location
-                readOut.setText(location.getLongitude() + "  ,  " + location.getLatitude());
 
                 current = location;
 
@@ -302,7 +298,33 @@ public class LocationListActivity extends AppCompatActivity implements OnClickLi
         mMap.addMarker(new MarkerOptions().position(new LatLng(dvic.getLatitude(), dvic.getLongitude())).title("Dvic"));
         mMap.addMarker(new MarkerOptions().position(new LatLng(anzalone.getLatitude(), anzalone.getLongitude())).title("Anzalone"));
 
-        mMap.animateCamera(CameraUpdateFactory.zoomBy(14.0f));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(fountain.getLatitude(),fountain.getLongitude()),20.0f));
+
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if(des != null) des.remove();
+        LatLng latLng = new LatLng(fayard.getLatitude(),fayard.getLongitude());
+        String locName = parent.getItemAtPosition(position).toString();
+        readOut.setText(locName);
+
+        if(locName.equals("Fayard")) latLng = new LatLng(fayard.getLatitude(),fayard.getLongitude());
+        else if(locName.equals("DVic")) latLng = new LatLng(dvic.getLatitude(),dvic.getLongitude());
+        else if(locName.equals("Katrina Fountain")) latLng = new LatLng(fountain.getLatitude(),fountain.getLongitude());
+        else if(locName.equals("Anzalone")) latLng = new LatLng(anzalone.getLatitude(),anzalone.getLongitude());
+        else if(locName.equals("Union East")) latLng = new LatLng(unionEast.getLatitude(),unionEast.getLongitude());
+        else if(locName.equals("Union West")) latLng = new LatLng(unionWest.getLatitude(),unionWest.getLongitude());
+        else if(locName.equals("Library")) latLng = new LatLng(library.getLatitude(),library.getLongitude());
+
+
+        des = mMap.addCircle(new CircleOptions().center(latLng).radius(10));
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
     }
 }

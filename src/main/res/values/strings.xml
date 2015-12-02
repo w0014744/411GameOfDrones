@@ -26,4 +26,13 @@
     <string name="union">Union</string>
     <string name="stadium">Strawberry Stadium</string>
     <string name="bearing">bearing, distance</string>
+    <string-array name="Locations">
+        <item>Anzalone</item>
+        <item>DVic</item>
+        <item>Fayard</item>
+        <item>Katrina Fountain</item>
+        <item>Library</item>
+        <item>Union East</item>
+        <item>Union West</item>
+    </string-array>
 </resources>
