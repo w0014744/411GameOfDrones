@@ -1,6 +1,7 @@
 package com.overpaoered.robotremote;
 
 import java.io.BufferedReader;
+import java.io.Serializable;
 import java.lang.Exception;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -19,7 +20,7 @@ import android.util.Log;
 /*
 This class is used for sending and receiving data between the Arduino device and Android device.
  */
-public class BtInterface {
+public class BtInterface implements Serializable {
 
 	private BluetoothDevice device = null;
 	private BluetoothSocket socket = null;
