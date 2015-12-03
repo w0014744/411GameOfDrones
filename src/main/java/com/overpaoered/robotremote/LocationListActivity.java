@@ -235,7 +235,7 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
                 currentMarker = mMap.addMarker(new MarkerOptions().position(new LatLng(current.getLatitude(), current.getLongitude())).title("Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.kyang)));
                 mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(current.getLatitude(), current.getLongitude())));
 
-                if(pathChosen && current.distanceTo(destination) <= 2){
+                if(pathChosen && current.distanceTo(destination) <= 8){
 
                     pathChosen = false;
                     readOut.setText("You Made It!!!!");

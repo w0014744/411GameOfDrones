@@ -207,15 +207,19 @@ public class DroneRemoteActivity extends Activity implements OnClickListener {
         }
         else if (v == rightFor) {
             addToLog("right forward");
+            bt.sendData("W");
         }
         else if(v == leftFor) {
             addToLog("left forward");
+            bt.sendData("x");
         }
         else if(v == rightBack) {
             addToLog("right back");
+            bt.sendData("Y");
         }
         else if(v == leftBack) {
             addToLog("left back");
+            bt.sendData("Z");
         }
 	}
 
