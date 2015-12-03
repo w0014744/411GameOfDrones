@@ -41,6 +41,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LocationListActivity extends AppCompatActivity implements OnMapReadyCallback,AdapterView.OnItemSelectedListener {
     private Spinner spinner;
     private BtInterface bt = null;
@@ -143,6 +146,7 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
         }
         current = locManager.getLastKnownLocation(locManager.GPS_PROVIDER);
         getLocation();
+        Location nearest = getNearestLocation(current);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -214,6 +218,35 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
     ** and places that location in the current Location object
     **
      */
+
+    public Location getNearestLocation (Location here) {
+
+        Location nearest = new Location("");
+        List<Location> locations = new ArrayList<Location>();
+        locations.add(library);
+        locations.add(fayard);
+        locations.add(fountain);
+        locations.add(dvic);
+        locations.add(unionEast);
+        locations.add(unionWest);
+        locations.add(location6);
+        locations.add(location7);
+        locations.add(anzalone);
+
+        float dist = current.distanceTo(locations.get(0));
+        float shortest;
+
+        for (Location loc : locations) {
+            if (current.distanceTo(loc) <= dist) {
+                dist = current.distanceTo(loc);
+                nearest = loc;
+            }
+        }
+
+        return nearest;
+    }
+
+
     public void getLocation() {
 
         LocationListener locationListener = new LocationListener() {
@@ -288,7 +321,7 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        
+
         mMap.addMarker(new MarkerOptions().position(new LatLng(fayard.getLatitude(), fayard.getLongitude())).title("Fayard Hall"));
         mMap.addMarker(new MarkerOptions().position(new LatLng(library.getLatitude(), library.getLongitude())).title("Library"));
         mMap.addMarker(new MarkerOptions().position(new LatLng(fountain.getLatitude(), fountain.getLongitude())).title("Katrina Fountain"));
