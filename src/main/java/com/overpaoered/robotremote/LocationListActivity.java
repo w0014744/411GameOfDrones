@@ -1,15 +1,11 @@
 package com.overpaoered.robotremote;
 
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.location.Criteria;
 import android.location.Location;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.ContextCompat;
@@ -21,15 +17,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.view.View.OnClickListener;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.bluetooth.BluetoothAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -167,7 +160,7 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
             }
             else{
-                bt = DroneRemoteActivity.bt;
+                bt = new BtInterface(handlerStatus, handler);
             }
         }
     }
@@ -257,7 +250,7 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
                 current = location;
 
                 if(currentMarker != null)currentMarker.remove();
-                currentMarker = mMap.addMarker(new MarkerOptions().position(new LatLng(current.getLatitude(), current.getLongitude())).title("Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.kYang)));
+                currentMarker = mMap.addMarker(new MarkerOptions().position(new LatLng(current.getLatitude(), current.getLongitude())).title("Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.kyang)));
                 mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(current.getLatitude(), current.getLongitude())));
             }
 
