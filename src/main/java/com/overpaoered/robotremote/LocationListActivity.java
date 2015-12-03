@@ -163,6 +163,8 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
                 bt = new BtInterface(handlerStatus, handler);
             }
         }
+        bt.connect();
+        
     }
 
     @Override
