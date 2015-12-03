@@ -33,8 +33,8 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polygon;
-import com.google.android.gms.maps.model.PolygonOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +58,7 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
     private Location current = null;
     private Marker currentMarker = null;
     private Circle des;
-    private Polygon path;
+    private Polyline path;
 
     private TextView readOut;
     private BluetoothAdapter mBluetoothAdapter = null;
@@ -357,13 +357,13 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
 
     public void drawPolygon(Location[] paths){
 
-        PolygonOptions poly = new PolygonOptions();
+        PolylineOptions poly = new PolylineOptions();
 
         for(int i = 0; i < paths.length; i++){
             poly.add(new LatLng(paths[i].getLatitude(), paths[i].getLongitude()));
 
         }
-        path = mMap.addPolygon(poly);
+        path = mMap.addPolyline(poly);
     }
     /**
      * Manipulates the map once available.
