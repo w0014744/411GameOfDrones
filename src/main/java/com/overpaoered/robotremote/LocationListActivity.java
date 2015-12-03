@@ -287,29 +287,29 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
         paths[0][6] = new Location[]{library,dvic,location6,fountain,fayard};
 
         paths[1][0] = new Location[]{dvic, library};
-        paths[1][2] = new Location[]{dvic,unionEast};
-        paths[1][3] = new Location[]{dvic,unionEast,unionWest};
+        paths[1][2] = new Location[]{dvic,unionWest};
+        paths[1][3] = new Location[]{dvic,unionWest,unionEast};
         paths[1][5] = new Location[]{dvic,location6,location7,anzalone};
         paths[1][4] = new Location[]{dvic,location6,fountain};
         paths[1][6] = new Location[]{dvic,location6,fountain,fayard};
 
-        paths[2][3] = new Location[]{unionEast,unionWest};
-        paths[2][1] = new Location[]{unionEast,dvic};
-        paths[2][0] = new Location[]{unionEast,dvic,library};
-        paths[2][4] = new Location[]{unionEast,unionWest,fountain};
-        paths[2][6] = new Location[]{unionEast,unionWest,fountain,fayard};
-        paths[2][5] = new Location[]{unionEast,unionWest,fountain,location6,location7,anzalone};
+        paths[2][3] = new Location[]{unionWest,unionEast};
+        paths[2][1] = new Location[]{unionWest,dvic};
+        paths[2][0] = new Location[]{unionWest,dvic,library};
+        paths[2][4] = new Location[]{unionWest,unionEast,fountain};
+        paths[2][6] = new Location[]{unionWest,unionEast,fountain,fayard};
+        paths[2][5] = new Location[]{unionWest,unionEast,fountain,location6,location7,anzalone};
 
-        paths[3][2] = new Location[]{unionWest,unionEast};
-        paths[3][1] = new Location[]{unionWest,unionEast,dvic};
-        paths[3][0] = new Location[]{unionWest,unionEast,dvic,library};
-        paths[3][4] = new Location[]{unionWest,fountain};
-        paths[3][6] = new Location[]{unionWest,fountain,fayard};
-        paths[3][5] = new Location[]{unionWest,fountain,location6,location7,anzalone};
+        paths[3][2] = new Location[]{unionEast,unionWest};
+        paths[3][1] = new Location[]{unionEast,unionWest,dvic};
+        paths[3][0] = new Location[]{unionEast,unionWest,dvic,library};
+        paths[3][4] = new Location[]{unionEast,fountain};
+        paths[3][6] = new Location[]{unionEast,fountain,fayard};
+        paths[3][5] = new Location[]{unionEast,fountain,location6,location7,anzalone};
 
         paths[4][6] = new Location[]{fountain,fayard};
-        paths[4][3] = new Location[]{fountain,unionWest};
-        paths[4][2] = new Location[]{fountain,unionWest,unionEast};
+        paths[4][3] = new Location[]{fountain,unionEast};
+        paths[4][2] = new Location[]{fountain,unionEast,unionWest};
         paths[4][1] = new Location[]{fountain,location6,dvic};
         paths[4][0] = new Location[]{fountain,location6,dvic,library};
         paths[4][5] = new Location[]{fountain,location6,location7,anzalone};
@@ -318,15 +318,15 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
         paths[5][6] = new Location[]{anzalone,location7,location6,fountain,fayard};
         paths[5][1] = new Location[]{anzalone,location7,location6,dvic};
         paths[5][0] = new Location[]{anzalone,location7,location6,dvic,library};
-        paths[5][2] = new Location[]{anzalone,location7,location6,dvic,unionEast};
-        paths[5][3] = new Location[]{anzalone,location7,location6,fountain,unionWest};
+        paths[5][2] = new Location[]{anzalone,location7,location6,dvic,unionWest};
+        paths[5][3] = new Location[]{anzalone,location7,location6,fountain,unionEast};
 
         paths[6][4] = new Location[]{fayard,fountain};
         paths[6][5] = new Location[]{fayard,fountain,location6,location7,anzalone};
         paths[6][1] = new Location[]{fayard,fountain,location6,dvic};
         paths[6][0] = new Location[]{fayard,fountain,location6,dvic,library};
-        paths[6][3] = new Location[]{fayard,fountain,unionWest};
-        paths[6][2] = new Location[]{fayard,fountain,unionWest,unionEast};
+        paths[6][3] = new Location[]{fayard,fountain,unionEast};
+        paths[6][2] = new Location[]{fayard,fountain,unionEast,unionWest};
     }
 
 
@@ -337,16 +337,16 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
 
         if(start.equals(library)) locNum = 0;
         else if(start.equals(dvic)) locNum = 1;
-        else if(start.equals(unionEast)) locNum = 2;
-        else if(start.equals(unionWest)) locNum = 3;
+        else if(start.equals(unionWest)) locNum = 2;
+        else if(start.equals(unionEast)) locNum = 3;
         else if(start.equals(fountain)) locNum = 4;
         else if(start.equals(anzalone)) locNum = 5;
         else if(start.equals(fayard)) locNum = 6;
 
         if(destination.equals(library)) locNumE = 0;
         else if(destination.equals(dvic)) locNumE = 1;
-        else if(destination.equals(unionEast)) locNumE = 2;
-        else if(destination.equals(unionWest)) locNumE = 3;
+        else if(destination.equals(unionWest)) locNumE = 2;
+        else if(destination.equals(unionEast)) locNumE = 3;
         else if(destination.equals(fountain)) locNumE = 4;
         else if(destination.equals(anzalone)) locNumE = 5;
         else if(destination.equals(fayard)) locNumE = 6;
