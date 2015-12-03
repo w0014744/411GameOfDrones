@@ -164,11 +164,9 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
             }
             else{
-                bt = new BtInterface(handlerStatus, handler);
+                bt = DroneRemoteActivity.bt;
             }
         }
-        bt.connect();
-        
     }
 
     @Override
