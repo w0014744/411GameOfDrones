@@ -40,6 +40,8 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.PolygonOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,10 +60,12 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
     private Location location7 = new Location("");
     private Location anzalone= new Location("");
     private Location dvic = new Location("");
+    private Location[][][] paths = new Location[7][7][];
 
     private Location current = null;
     private Marker currentMarker = null;
     private Circle des;
+    private Polygon path;
 
     private TextView readOut;
     private BluetoothAdapter mBluetoothAdapter = null;
@@ -229,8 +233,6 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
         locations.add(dvic);
         locations.add(unionEast);
         locations.add(unionWest);
-        locations.add(location6);
-        locations.add(location7);
         locations.add(anzalone);
 
         float dist = current.distanceTo(locations.get(0));
@@ -257,7 +259,7 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
                 current = location;
 
                 if(currentMarker != null)currentMarker.remove();
-                currentMarker = mMap.addMarker(new MarkerOptions().position(new LatLng(current.getLatitude(), current.getLongitude())).title("Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.kYang)));
+                currentMarker = mMap.addMarker(new MarkerOptions().position(new LatLng(current.getLatitude(), current.getLongitude())).title("Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.kyang)));
                 mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(current.getLatitude(), current.getLongitude())));
             }
 
@@ -307,9 +309,93 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
 
         anzalone.setLatitude(30.515217);
         anzalone.setLongitude(-90.466925);
+
+        paths[0][1] = new Location[]{library,dvic};
+        paths[0][5] = new Location[]{library,dvic, location6,location7, anzalone};
+        paths[0][3] = new Location[]{library,dvic,unionWest};
+        paths[0][2] = new Location[]{library,dvic,unionWest,unionEast};
+        paths[0][4] = new Location[]{library,dvic,location6,fountain};
+        paths[0][6] = new Location[]{library,dvic,location6,fountain,fayard};
+
+        paths[1][0] = new Location[]{dvic, library};
+        paths[1][2] = new Location[]{dvic,unionEast};
+        paths[1][3] = new Location[]{dvic,unionEast,unionWest};
+        paths[1][5] = new Location[]{dvic,location6,location7,anzalone};
+        paths[1][4] = new Location[]{dvic,location6,fountain};
+        paths[1][6] = new Location[]{dvic,location6,fountain,fayard};
+
+        paths[2][3] = new Location[]{unionEast,unionWest};
+        paths[2][1] = new Location[]{unionEast,dvic};
+        paths[2][0] = new Location[]{unionEast,dvic,library};
+        paths[2][4] = new Location[]{unionEast,unionWest,fountain};
+        paths[2][6] = new Location[]{unionEast,unionWest,fountain,fayard};
+        paths[2][5] = new Location[]{unionEast,unionWest,fountain,location6,location7,anzalone};
+
+        paths[3][2] = new Location[]{unionWest,unionEast};
+        paths[3][1] = new Location[]{unionWest,unionEast,dvic};
+        paths[3][0] = new Location[]{unionWest,unionEast,dvic,library};
+        paths[3][4] = new Location[]{unionWest,fountain};
+        paths[3][6] = new Location[]{unionWest,fountain,fayard};
+        paths[3][5] = new Location[]{unionWest,fountain,location6,location7,anzalone};
+
+        paths[4][6] = new Location[]{fountain,fayard};
+        paths[4][3] = new Location[]{fountain,unionWest};
+        paths[4][2] = new Location[]{fountain,unionWest,unionEast};
+        paths[4][1] = new Location[]{fountain,location6,dvic};
+        paths[4][0] = new Location[]{fountain,location6,dvic,library};
+        paths[4][5] = new Location[]{fountain,location6,location7,anzalone};
+
+        paths[5][4] = new Location[]{anzalone,location7,location6,fountain};
+        paths[5][6] = new Location[]{anzalone,location7,location6,fountain,fayard};
+        paths[5][1] = new Location[]{anzalone,location7,location6,dvic};
+        paths[5][0] = new Location[]{anzalone,location7,location6,dvic,library};
+        paths[5][2] = new Location[]{anzalone,location7,location6,dvic,unionEast};
+        paths[5][3] = new Location[]{anzalone,location7,location6,fountain,unionWest};
+
+        paths[6][4] = new Location[]{fayard,fountain};
+        paths[6][5] = new Location[]{fayard,fountain,location6,location7,anzalone};
+        paths[6][1] = new Location[]{fayard,fountain,location6,dvic};
+        paths[6][0] = new Location[]{fayard,fountain,location6,dvic,library};
+        paths[6][3] = new Location[]{fayard,fountain,unionWest};
+        paths[6][2] = new Location[]{fayard,fountain,unionWest,unionEast};
     }
 
 
+    public Location[] shortestPath(Location start, Location destination) {
+        Location[] toReturn = new Location[0];
+        int locNum = 0;
+        int locNumE = 0;
+
+        if(start.equals(library)) locNum = 0;
+        else if(start.equals(dvic)) locNum = 1;
+        else if(start.equals(unionEast)) locNum = 2;
+        else if(start.equals(unionWest)) locNum = 3;
+        else if(start.equals(fountain)) locNum = 4;
+        else if(start.equals(anzalone)) locNum = 5;
+        else if(start.equals(fayard)) locNum = 6;
+
+        if(destination.equals(library)) locNumE = 0;
+        else if(destination.equals(dvic)) locNumE = 1;
+        else if(destination.equals(unionEast)) locNumE = 2;
+        else if(destination.equals(unionWest)) locNumE = 3;
+        else if(destination.equals(fountain)) locNumE = 4;
+        else if(destination.equals(anzalone)) locNumE = 5;
+        else if(destination.equals(fayard)) locNumE = 6;
+
+        return paths[locNum][locNumE];
+
+    }
+
+    public void drawPolygon(Location[] paths){
+
+        PolygonOptions poly = new PolygonOptions();
+
+        for(int i = 0; i < paths.length; i++){
+            poly.add(new LatLng(paths[i].getLatitude(), paths[i].getLongitude()));
+
+        }
+        path = mMap.addPolygon(poly);
+    }
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -329,28 +415,31 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
         mMap.addMarker(new MarkerOptions().position(new LatLng(unionWest.getLatitude(), unionWest.getLongitude())).title("Union West"));
         mMap.addMarker(new MarkerOptions().position(new LatLng(dvic.getLatitude(), dvic.getLongitude())).title("Dvic"));
         mMap.addMarker(new MarkerOptions().position(new LatLng(anzalone.getLatitude(), anzalone.getLongitude())).title("Anzalone"));
-
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(fountain.getLatitude(),fountain.getLongitude()),20.0f));
-
 
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if(des != null) des.remove();
+        if(path != null) path.remove();
         LatLng latLng = new LatLng(fayard.getLatitude(),fayard.getLongitude());
         String locName = parent.getItemAtPosition(position).toString();
         readOut.setText(locName);
 
-        if(locName.equals("Fayard")) latLng = new LatLng(fayard.getLatitude(),fayard.getLongitude());
-        else if(locName.equals("DVic")) latLng = new LatLng(dvic.getLatitude(),dvic.getLongitude());
-        else if(locName.equals("Katrina Fountain")) latLng = new LatLng(fountain.getLatitude(),fountain.getLongitude());
-        else if(locName.equals("Anzalone")) latLng = new LatLng(anzalone.getLatitude(),anzalone.getLongitude());
-        else if(locName.equals("Union East")) latLng = new LatLng(unionEast.getLatitude(),unionEast.getLongitude());
-        else if(locName.equals("Union West")) latLng = new LatLng(unionWest.getLatitude(),unionWest.getLongitude());
-        else if(locName.equals("Library")) latLng = new LatLng(library.getLatitude(),library.getLongitude());
+        Location nearestNode = getNearestLocation(current);
+        Location[] paths = new Location[0];
 
 
+        if(locName.equals("Fayard")){ latLng = new LatLng(fayard.getLatitude(),fayard.getLongitude()); paths = shortestPath(nearestNode,fayard);}
+        else if(locName.equals("DVic")){ latLng = new LatLng(dvic.getLatitude(),dvic.getLongitude());paths = shortestPath(nearestNode,dvic);}
+        else if(locName.equals("Katrina Fountain")) {latLng = new LatLng(fountain.getLatitude(),fountain.getLongitude());paths = shortestPath(nearestNode,fountain);}
+        else if(locName.equals("Anzalone")) {latLng = new LatLng(anzalone.getLatitude(),anzalone.getLongitude());paths = shortestPath(nearestNode,anzalone);}
+        else if(locName.equals("Union East")) {latLng = new LatLng(unionEast.getLatitude(),unionEast.getLongitude());paths = shortestPath(nearestNode,unionEast);}
+        else if(locName.equals("Union West")) {latLng = new LatLng(unionWest.getLatitude(),unionWest.getLongitude());paths = shortestPath(nearestNode,unionWest);}
+        else if(locName.equals("Library")) {latLng = new LatLng(library.getLatitude(),library.getLongitude());paths = shortestPath(nearestNode,library);}
+
+        drawPolygon(paths);
         des = mMap.addCircle(new CircleOptions().center(latLng).radius(10));
 
     }
