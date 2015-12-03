@@ -222,12 +222,9 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
         locations.add(dvic);
         locations.add(unionEast);
         locations.add(unionWest);
-        locations.add(location6);
-        locations.add(location7);
         locations.add(anzalone);
 
         float dist = current.distanceTo(locations.get(0));
-        float shortest;
 
         for (Location loc : locations) {
             if (current.distanceTo(loc) <= dist) {
