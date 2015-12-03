@@ -279,6 +279,7 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
         anzalone.setLatitude(30.515217);
         anzalone.setLongitude(-90.466925);
 
+        paths[0][0] = new Location[]{library};
         paths[0][1] = new Location[]{library,dvic};
         paths[0][5] = new Location[]{library,dvic, location6,location7, anzalone};
         paths[0][3] = new Location[]{library,dvic,unionWest};
@@ -286,6 +287,7 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
         paths[0][4] = new Location[]{library,dvic,location6,fountain};
         paths[0][6] = new Location[]{library,dvic,location6,fountain,fayard};
 
+        paths[1][1] = new Location[]{dvic};
         paths[1][0] = new Location[]{dvic, library};
         paths[1][2] = new Location[]{dvic,unionWest};
         paths[1][3] = new Location[]{dvic,unionWest,unionEast};
@@ -293,6 +295,7 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
         paths[1][4] = new Location[]{dvic,location6,fountain};
         paths[1][6] = new Location[]{dvic,location6,fountain,fayard};
 
+        paths[2][2] = new Location[]{unionWest};
         paths[2][3] = new Location[]{unionWest,unionEast};
         paths[2][1] = new Location[]{unionWest,dvic};
         paths[2][0] = new Location[]{unionWest,dvic,library};
@@ -300,6 +303,7 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
         paths[2][6] = new Location[]{unionWest,unionEast,fountain,fayard};
         paths[2][5] = new Location[]{unionWest,unionEast,fountain,location6,location7,anzalone};
 
+        paths[3][3] = new Location[]{unionEast};
         paths[3][2] = new Location[]{unionEast,unionWest};
         paths[3][1] = new Location[]{unionEast,unionWest,dvic};
         paths[3][0] = new Location[]{unionEast,unionWest,dvic,library};
@@ -307,6 +311,7 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
         paths[3][6] = new Location[]{unionEast,fountain,fayard};
         paths[3][5] = new Location[]{unionEast,fountain,location6,location7,anzalone};
 
+        paths[4][4] = new Location[]{fountain};
         paths[4][6] = new Location[]{fountain,fayard};
         paths[4][3] = new Location[]{fountain,unionEast};
         paths[4][2] = new Location[]{fountain,unionEast,unionWest};
@@ -314,6 +319,7 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
         paths[4][0] = new Location[]{fountain,location6,dvic,library};
         paths[4][5] = new Location[]{fountain,location6,location7,anzalone};
 
+        paths[5][5] = new Location[]{anzalone};
         paths[5][4] = new Location[]{anzalone,location7,location6,fountain};
         paths[5][6] = new Location[]{anzalone,location7,location6,fountain,fayard};
         paths[5][1] = new Location[]{anzalone,location7,location6,dvic};
@@ -321,6 +327,7 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
         paths[5][2] = new Location[]{anzalone,location7,location6,dvic,unionWest};
         paths[5][3] = new Location[]{anzalone,location7,location6,fountain,unionEast};
 
+        paths[6][6] = new Location[]{fayard};
         paths[6][4] = new Location[]{fayard,fountain};
         paths[6][5] = new Location[]{fayard,fountain,location6,location7,anzalone};
         paths[6][1] = new Location[]{fayard,fountain,location6,dvic};
