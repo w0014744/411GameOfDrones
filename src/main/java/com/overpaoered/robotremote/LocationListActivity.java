@@ -407,13 +407,41 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
         Location[] paths = new Location[0];
 
 
-        if(locName.equals("Fayard")){ latLng = new LatLng(fayard.getLatitude(),fayard.getLongitude()); paths = shortestPath(nearestNode,fayard);}
-        else if(locName.equals("DVic")){ latLng = new LatLng(dvic.getLatitude(),dvic.getLongitude());paths = shortestPath(nearestNode,dvic);}
-        else if(locName.equals("Katrina Fountain")) {latLng = new LatLng(fountain.getLatitude(),fountain.getLongitude());paths = shortestPath(nearestNode,fountain);}
-        else if(locName.equals("Anzalone")) {latLng = new LatLng(anzalone.getLatitude(),anzalone.getLongitude());paths = shortestPath(nearestNode,anzalone);}
-        else if(locName.equals("Union East")) {latLng = new LatLng(unionEast.getLatitude(),unionEast.getLongitude());paths = shortestPath(nearestNode,unionEast);}
-        else if(locName.equals("Union West")) {latLng = new LatLng(unionWest.getLatitude(),unionWest.getLongitude());paths = shortestPath(nearestNode,unionWest);}
-        else if(locName.equals("Library")) {latLng = new LatLng(library.getLatitude(),library.getLongitude());paths = shortestPath(nearestNode,library);}
+        if(locName.equals("Fayard")){
+            latLng = new LatLng(fayard.getLatitude(),fayard.getLongitude());
+            paths = shortestPath(nearestNode,fayard);
+            bt.sendData("0");
+        }
+        else if(locName.equals("DVic")){
+            latLng = new LatLng(dvic.getLatitude(),dvic.getLongitude());
+            paths = shortestPath(nearestNode,dvic);
+            bt.sendData("1");
+        }
+        else if(locName.equals("Katrina Fountain")) {
+            latLng = new LatLng(fountain.getLatitude(),fountain.getLongitude());
+            paths = shortestPath(nearestNode,fountain);
+            bt.sendData("2");
+        }
+        else if(locName.equals("Anzalone")) {
+            latLng = new LatLng(anzalone.getLatitude(),anzalone.getLongitude());
+            paths = shortestPath(nearestNode,anzalone);
+            bt.sendData("3");
+        }
+        else if(locName.equals("Union East")) {
+            latLng = new LatLng(unionEast.getLatitude(),unionEast.getLongitude());
+            paths = shortestPath(nearestNode,unionEast);
+            bt.sendData("4");
+        }
+        else if(locName.equals("Union West")) {
+            latLng = new LatLng(unionWest.getLatitude(),unionWest.getLongitude());
+            paths = shortestPath(nearestNode,unionWest);
+            bt.sendData("5");
+        }
+        else if(locName.equals("Library")) {
+            latLng = new LatLng(library.getLatitude(),library.getLongitude());
+            paths = shortestPath(nearestNode,library);
+            bt.sendData("6");
+        }
 
         drawPolygon(paths);
         des = mMap.addCircle(new CircleOptions().center(latLng).radius(10));
