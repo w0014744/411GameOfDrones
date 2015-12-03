@@ -192,31 +192,6 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
 
         return super.onOptionsItemSelected(item);
     }
-/*
-    @Override
-    public void onClick (View v) {
-        if (v == spinner) {
-
-
-            float bearing = current.bearingTo(fayard);
-            float distance = current.distanceTo(fayard);
-            readOut.setText(bearing + " , " + distance);
-
-            bt.sendData(((String.valueOf(bearing))));
-            bt.sendData(",");
-            bt.sendData(((String.valueOf(distance))));
-        }
-
-
-    }
-    */
-
-
-    /*
-    ** getLocation - this method gets the users current location based on the phone GPS
-    ** and places that location in the current Location object
-    **
-     */
 
     public Location getNearestLocation (Location here) {
 
