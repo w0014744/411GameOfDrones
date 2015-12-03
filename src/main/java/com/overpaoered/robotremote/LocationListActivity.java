@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.ContextCompat;
@@ -69,6 +70,7 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
     private String[] logArray = null;
 
     LocationManager locManager;
+    private MediaPlayer play;
 
     //Google Map
     private GoogleMap mMap;
@@ -151,6 +153,8 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);//Map ID
         mapFragment.getMapAsync(this);
+
+        play = MediaPlayer.create(getApplicationContext(),R.raw.youmadeit);
     }
 
     @Override
@@ -237,6 +241,7 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
                     readOut.setText("You Made It!!!!");
                     path.remove();
                     des.remove();
+                    play.start();
                 }
             }
 
@@ -399,7 +404,7 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
         mMap.addMarker(new MarkerOptions().position(new LatLng(unionWest.getLatitude(), unionWest.getLongitude())).title("Union West"));
         mMap.addMarker(new MarkerOptions().position(new LatLng(dvic.getLatitude(), dvic.getLongitude())).title("Dvic"));
         mMap.addMarker(new MarkerOptions().position(new LatLng(anzalone.getLatitude(), anzalone.getLongitude())).title("Anzalone"));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(fountain.getLatitude(),fountain.getLongitude()),20.0f));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(fountain.getLatitude(),fountain.getLongitude()),15.0f));
 
     }
 
