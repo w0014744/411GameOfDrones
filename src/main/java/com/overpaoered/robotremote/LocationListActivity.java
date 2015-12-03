@@ -288,8 +288,7 @@ public class LocationListActivity extends AppCompatActivity implements OnMapRead
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
+        
         mMap.addMarker(new MarkerOptions().position(new LatLng(fayard.getLatitude(), fayard.getLongitude())).title("Fayard Hall"));
         mMap.addMarker(new MarkerOptions().position(new LatLng(library.getLatitude(), library.getLongitude())).title("Library"));
         mMap.addMarker(new MarkerOptions().position(new LatLng(fountain.getLatitude(), fountain.getLongitude())).title("Katrina Fountain"));
